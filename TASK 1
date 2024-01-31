@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+
+// Function to calculate the sum of array elements
+int summation(const std::vector<int>& arr) {
+    int sum = 0;
+    for (int num : arr) {
+        sum += num;
+    }
+    return sum;
+}
+
+// Function to find the maximum element in the array
+int maximum(const std::vector<int>& arr) {
+    if (arr.empty()) {
+        std::cerr << "Array is empty. Cannot determine maximum value." << std::endl;
+        return INT_MIN; // Return minimum integer value if array is empty
+    }
+
+    int max = arr[0];
+    for (int num : arr) {
+        if (num > max) {
+            max = num;
+        }
+    }
+    return max;
+}
+
+int main() {
+    int n;
+    std::cout << "Enter the number of elements in the array: ";
+    std::cin >> n;
+
+    // Validate the input
+    if (n < 0) {
+        std::cerr << "Number of elements cannot be negative." << std::endl;
+        return 1;
+    }
+
+    std::vector<int> arr(n);
+    std::cout << "Enter " << n << " integers:" << std::endl;
+
+    // Read n integers from the user
+    for (int i = 0; i < n; ++i) {
+        std::cin >> arr[i];
+    }
+
+    // Call the functions and display their results
+    std::cout << "Sum of the array elements: " << summation(arr) << std::endl;
+    std::cout << "Maximum element in the array: " << maximum(arr) << std::endl;
+
+    return 0;
+}
