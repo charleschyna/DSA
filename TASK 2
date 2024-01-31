@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct Course {
+    string course_code;
+    string course_name;
+};
+
+struct Grade {
+    int mark;
+    char the_grade;
+    bool grade_set;  // Indicates if the grade has been calculated and set
+
+    Grade() : mark(0), the_grade('E'), grade_set(false) {}
+};
+
+struct Student {
+    string reg_no;
+    string name;
+    int age;
+    Course course;
+    Grade grade;
+
+    void calculateGrade() {
+        if (grade.mark > 69) grade.the_grade = 'A';
+        else if (grade.mark > 59) grade.the_grade = 'B';
+        else if (grade.mark > 49) grade.the_grade = 'C';
+        else if (grade.mark > 39) grade.the_grade = 'D';
+        else grade.the_grade = 'E';
+
+        grade.grade_set = true;
+    }
+};
+
+// Global array to store students
+Student students[40];
+int num_students = 0; // Current number of students
+
+void addStudent(const Student& student) {
+    if (num_students >= 40) {
+        cout << "Maximum student limit reached." << endl;
+        return;
+    }
+
+    students[num_students++] = student;
+}
+
+void editStudent(const string& reg_no, const Student& updatedStudent) {
+    for (int i = 0; i < num_students; ++i) {
+        if (students[i].reg_no == reg_no) {
+            students[i] = updatedStudent;
+            return;
+        }
+    }
+    cout << "Student with registration number " << reg_no << " not found." << endl;
+}
+
+void addMarks(const string& reg_no, int mark) {
+    for (int i = 0; i < num_students; ++i) {
+        if (students[i].reg_no == reg_no) {
+            if (!students[i].grade.grade_set) {
+                students[i].grade.mark = mark;
+                students[i].calculateGrade();
+            } else {
+                cout << "Grade already set, cannot alter." << endl;
+            }
+            return;
+        }
+    }
+    cout << "Student with registration number " << reg_no << " not found." << endl;
+}
+
+int main() {
+    // Use the addStudent, editStudent, and addMarks functions to manage students
+    // Sample usage can be added here for demonstration
+    return 0;
+}
