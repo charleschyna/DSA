@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Course {
+public:
+    string course_code;
+    string course_name;
+
+    Course(string code = "", string name = "") : course_code(code), course_name(name) {}
+};
+
+class Grade {
+    int mark;
+    char the_grade;
+    bool grade_set;
+
+public:
+    Grade() : mark(0), the_grade('E'), grade_set(false) {}
+
+    void setMark(int m) {
+        if (!grade_set) {
+            mark = m;
+            calculateGrade();
+        } else {
+            cout << "Grade already set. Cannot alter." << endl;
+        }
+    }
+
+    char getGrade() const {
+        return the_grade;
+    }
+
+private:
+    void calculateGrade() {
+        if (mark > 69) the_grade = 'A';
+        else if (mark > 59) the_grade = 'B';
+        else if (mark > 49) the_grade = 'C';
+        else if (mark > 39) the_grade = 'D';
+        else the_grade = 'E';
+
+        grade_set = true;
+    }
+};
+
+class Student {
+    string reg_no;
+    string name;
+    int age;
+    Course course;
+    Grade grade;
+
+public:
+    Student(string regNo, string n, int a, Course c) 
+        : reg_no(regNo), name(n), age(a), course(c) {}
+
+    void setGrade(int mark) {
+        grade.setMark(mark);
+    }
+
+    void displayDetails() const {
+        cout << "Registration Number: " << reg_no << endl;
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Course Code: " << course.course_code << endl;
+        cout << "Course Name: " << course.course_name << endl;
+        cout << "Grade: " << grade.getGrade() << endl;
+    }
+
+    // Add more functions as needed, like edit student details
+};
+
+int main() {
+    vector<Student> students;
+    // Assume maximum size of students is 40
+
+    // Example usage
+    Course course1("CS101", "Intro to Computer Science");
+    Student student1("12345", "John Doe", 20, course1);
+    student1.setGrade(85); // Setting the grade
+    student1.displayDetails();
+
+    // Add more students, edit details, and so on
+
+    return 0;
+}
